@@ -934,6 +934,7 @@ const DEFAULT_COLS = [
       {emoji:'📺', label:'YouTube',  url:'https://www.youtube.com'},
       {emoji:'🐦', label:'X',        url:'https://x.com'},
       {emoji:'🦋', label:'Bluesky',  url:'https://bsky.app'},
+      {emoji:'🎮', label:'rururu',   url:'https://rururu.app/'},
     ]
   },
   {
@@ -949,6 +950,24 @@ function loadCols() {
   catch { return DEFAULT_COLS; }
 }
 function saveCols(cols) { localStorage.setItem('nt_cols', JSON.stringify(cols)); }
+
+// Migration: ensure new default links are present
+function migrateLinks() {
+  const cols = loadCols();
+  let changed = false;
+  DEFAULT_COLS.forEach(defCol => {
+    const col = cols.find(c => c.id === defCol.id);
+    if (!col) return;
+    defCol.links.forEach(defLink => {
+      if (!col.links.some(l => l.url === defLink.url)) {
+        col.links.push(defLink);
+        changed = true;
+      }
+    });
+  });
+  if (changed) saveCols(cols);
+}
+migrateLinks();
 
 function renderCols() {
   const area = document.getElementById('links-area');
