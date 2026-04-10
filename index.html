@@ -6,104 +6,27 @@
   <title>Dashboard</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #f0f2f5;
-      --card: #ffffff;
-      --border: #e0e4ea;
-      --text: #1a1d23;
-      --muted: #7a8090;
-      --accent: #4a7cf7;
-      --green: #34a85a;
-      --blue: #1a73e8;
-      --orange: #f5900c;
-      --purple: #9c27b0;
-      --red: #e53935;
-      --radius: 12px;
-      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+      --bg: #f0f2f5; --card: #ffffff; --border: #e0e4ea;
+      --text: #1a1d23; --muted: #7a8090; --accent: #4a7cf7;
+      --green: #34a85a; --blue: #1a73e8; --purple: #9c27b0;
+      --red: #e53935; --radius: 12px; --shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ── Header ── */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 16px;
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-      height: 40px;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--card); border-bottom: 1px solid var(--border); flex-shrink: 0; height: 40px; }
     header .left { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); }
     header .hdate { font-weight: 600; color: var(--text); }
     header .right { display: flex; align-items: center; gap: 8px; }
-    header button {
-      background: none; border: none; cursor: pointer; color: var(--muted);
-      padding: 4px; border-radius: 6px; display: flex; align-items: center;
-    }
+    header button { background: none; border: none; cursor: pointer; color: var(--muted); padding: 4px; border-radius: 6px; display: flex; align-items: center; }
     header button:hover { background: var(--bg); color: var(--text); }
-
-    /* ── Main grid ── */
-    .main {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 220px 1fr 200px;
-      grid-template-rows: 1fr;
-      gap: 10px;
-      padding: 10px;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    /* ── Card base ── */
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--border);
-      border-radius: var(--radius) var(--radius) 0 0;
-    }
-
-    .card-header .add-btn {
-      background: none; border: none; cursor: pointer;
-      color: var(--muted); font-size: 16px; line-height: 1;
-      padding: 0 2px; border-radius: 4px;
-    }
+    .main { flex: 1; display: grid; grid-template-columns: 220px 1fr 200px; gap: 10px; padding: 10px; overflow: hidden; min-height: 0; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; }
+    .card-header .add-btn { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 16px; line-height: 1; padding: 0 2px; border-radius: 4px; }
     .card-header .add-btn:hover { color: var(--text); background: var(--bg); }
-
-    /* ── Left column ── */
-    .col-left {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
+    .col-left { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; overflow-x: hidden; }
     .col-left::-webkit-scrollbar { width: 4px; }
     .col-left::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    /* Weather */
     #weather-card { padding: 14px; }
     .weather-title { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
     .weather-main { display: flex; align-items: center; gap: 10px; }
@@ -111,476 +34,124 @@
     .weather-temp { font-size: 28px; font-weight: 300; }
     .weather-desc { font-size: 12px; color: var(--muted); }
     .weather-detail { font-size: 11px; color: var(--muted); margin-top: 6px; }
-
-    /* Clock */
-    #clock-card {
-      background: #1a1d23;
-      color: #e8eaed;
-      border-color: #2a2d35;
-      padding: 16px;
-      text-align: center;
-    }
-    #clock-time {
-      font-size: 42px;
-      font-weight: 200;
-      letter-spacing: -1px;
-      font-variant-numeric: tabular-nums;
-      line-height: 1;
-    }
+    #clock-card { background: #1a1d23; color: #e8eaed; border-color: #2a2d35; padding: 16px; text-align: center; }
+    #clock-time { font-size: 42px; font-weight: 200; letter-spacing: -1px; font-variant-numeric: tabular-nums; line-height: 1; }
     #clock-sec { font-size: 26px; font-weight: 200; opacity: 0.6; }
     #clock-date { font-size: 12px; color: rgba(232,234,237,0.5); margin-top: 4px; }
-
-    /* Calendar */
     #cal-card { padding: 10px; }
-    .cal-nav {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 8px;
-    }
+    .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
     .cal-nav span { font-size: 13px; font-weight: 600; }
-    .cal-nav button {
-      background: none; border: none; cursor: pointer; color: var(--muted);
-      font-size: 14px; padding: 2px 6px; border-radius: 4px;
-    }
+    .cal-nav button { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 14px; padding: 2px 6px; border-radius: 4px; }
     .cal-nav button:hover { background: var(--bg); }
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
-      text-align: center;
-    }
+    .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; text-align: center; }
     .cal-grid .dow { font-size: 10px; color: var(--muted); padding: 2px 0; }
     .cal-grid .dow:first-child { color: #e53935; }
     .cal-grid .dow:last-child { color: #1a73e8; }
-    .cal-day {
-      font-size: 11px;
-      padding: 3px 2px;
-      border-radius: 50%;
-      cursor: default;
-      line-height: 1.4;
-    }
-    .cal-day.today {
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-      border-radius: 50%;
-    }
+    .cal-day { font-size: 11px; padding: 3px 2px; border-radius: 50%; cursor: default; line-height: 1.4; }
+    .cal-day.today { background: var(--accent); color: white; font-weight: 700; }
     .cal-day.sun { color: #e53935; }
     .cal-day.sat { color: #1a73e8; }
     .cal-day.holiday { color: #e53935; }
     .cal-day.other-month { opacity: 0.3; }
-
-    /* Holidays */
     #holidays-card { padding: 10px; }
     .holidays-title { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
     .holiday-item { font-size: 11px; padding: 2px 0; display: flex; gap: 8px; }
     .holiday-item .hdate2 { color: var(--muted); flex-shrink: 0; }
-    .holiday-item .hname { color: var(--text); }
-
-    /* ── Center column ── */
-    .col-center {
-      display: grid;
-      grid-template-rows: auto auto 1fr;
-      gap: 10px;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    /* Site icons row */
-    #site-icons {
-      display: flex;
-      gap: 12px;
-      padding: 10px;
-      background: var(--card);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      flex-wrap: wrap;
-    }
-    .site-icon-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      color: var(--text);
-      cursor: pointer;
-    }
-    .site-icon-item:hover .site-icon-box {
-      transform: scale(1.06);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    .site-icon-box {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      border: 1.5px solid var(--border);
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .site-icon-box img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
-    .site-icon-label {
-      font-size: 11px;
-      color: var(--muted);
-      max-width: 72px;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Memo */
+    .col-center { display: grid; grid-template-rows: auto auto 1fr; gap: 10px; overflow: hidden; min-height: 0; }
+    #site-icons { display: flex; gap: 12px; padding: 10px; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); flex-wrap: wrap; }
+    .site-icon-item { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; color: var(--text); }
+    .site-icon-item:hover .site-icon-box { transform: scale(1.06); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    .site-icon-box { width: 64px; height: 64px; border-radius: 16px; border: 1.5px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s; }
+    .site-icon-box img { width: 40px; height: 40px; object-fit: contain; }
+    .site-icon-label { font-size: 11px; color: var(--muted); max-width: 72px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #memo-card { display: flex; flex-direction: column; }
     #memo-card .card-header { flex-shrink: 0; }
-    #memo-textarea {
-      flex: 1;
-      padding: 10px 14px;
-      border: none;
-      outline: none;
-      resize: none;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-      background: transparent;
-      font-family: inherit;
-      min-height: 80px;
-      max-height: 130px;
-    }
-    #memo-send {
-      align-self: flex-end;
-      margin: 0 10px 8px;
-      padding: 4px 16px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    /* Link columns container */
-    .links-area {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    /* Link column */
-    .link-col {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+    #memo-textarea { flex: 1; padding: 10px 14px; border: none; outline: none; resize: none; font-size: 13px; line-height: 1.7; color: var(--text); background: transparent; font-family: inherit; min-height: 80px; max-height: 130px; }
+    .links-area { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; overflow: hidden; min-height: 0; }
+    .link-col { display: flex; flex-direction: column; overflow: hidden; }
     .link-col .card-header { flex-shrink: 0; }
-    .link-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 6px 4px;
-    }
+    .link-list { flex: 1; overflow-y: auto; padding: 6px 4px; }
     .link-list::-webkit-scrollbar { width: 4px; }
     .link-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .link-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 8px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: var(--text);
-      font-size: 13px;
-      transition: background 0.15s;
-      cursor: pointer;
-    }
+    .link-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; text-decoration: none; color: var(--text); font-size: 13px; transition: background 0.15s; }
     .link-item:hover { background: var(--bg); }
-    .link-item .favicon {
-      width: 16px;
-      height: 16px;
-      border-radius: 3px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-    .link-item .favicon img {
-      width: 16px;
-      height: 16px;
-      border-radius: 2px;
-      display: block;
-    }
+    .link-item .favicon { width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .link-item .favicon img { width: 16px; height: 16px; border-radius: 2px; display: block; }
     .link-item .lname { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .link-item .ledit {
-      opacity: 0;
-      font-size: 11px;
-      color: var(--muted);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 1px 4px;
-      border-radius: 4px;
-    }
+    .link-item .ledit { opacity: 0; font-size: 11px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 1px 4px; border-radius: 4px; }
     .link-item:hover .ledit { opacity: 1; }
     .link-item .ledit:hover { background: var(--border); }
-
-    .add-link-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 8px;
-      font-size: 12px;
-      color: var(--muted);
-      cursor: pointer;
-      border-radius: 8px;
-      margin: 2px 4px;
-    }
+    .add-link-btn { display: flex; align-items: center; gap: 6px; padding: 5px 8px; font-size: 12px; color: var(--muted); cursor: pointer; border-radius: 8px; margin: 2px 4px; }
     .add-link-btn:hover { background: var(--bg); color: var(--text); }
-
-    /* ── Right column ── */
-    .col-right {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
+    .col-right { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; overflow-x: hidden; }
     .col-right::-webkit-scrollbar { width: 4px; }
     .col-right::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    /* Stopwatch */
-    #sw-card .card-header { color: var(--green); }
-    #sw-display, #timer-display {
-      font-size: 32px;
-      font-weight: 200;
-      text-align: center;
-      padding: 10px 0 6px;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 1px;
-    }
-    .sw-btns, .timer-btns {
-      display: flex;
-      gap: 6px;
-      padding: 0 10px 10px;
-      justify-content: center;
-    }
-    .sw-btns button, .timer-btns button {
-      flex: 1;
-      padding: 5px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 12px;
-      cursor: pointer;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.15s;
-    }
+    #sw-display, #timer-display { font-size: 32px; font-weight: 200; text-align: center; padding: 10px 0 6px; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+    .sw-btns, .timer-btns { display: flex; gap: 6px; padding: 0 10px 10px; justify-content: center; }
+    .sw-btns button, .timer-btns button { flex: 1; padding: 5px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; cursor: pointer; background: var(--bg); color: var(--text); transition: background 0.15s; }
     .sw-btns button:hover, .timer-btns button:hover { background: var(--border); }
-    .sw-btns button.primary, .timer-btns button.primary {
-      background: var(--green); color: white; border-color: var(--green);
-    }
-    .sw-btns button.primary:hover { filter: brightness(1.1); }
-    .sw-laps {
-      font-size: 11px;
-      color: var(--muted);
-      max-height: 60px;
-      overflow-y: auto;
-      padding: 0 10px 8px;
-    }
+    .sw-btns button.primary, .timer-btns button.primary { background: var(--green); color: white; border-color: var(--green); }
+    .sw-laps { font-size: 11px; color: var(--muted); max-height: 60px; overflow-y: auto; padding: 0 10px 8px; }
     .sw-laps div { padding: 1px 0; }
-
-    /* Timer */
-    #timer-card .card-header { color: var(--blue); }
-    #timer-input-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 8px 10px 0;
-    }
-    #timer-input-row input {
-      width: 44px;
-      text-align: center;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 4px;
-      font-size: 13px;
-      color: var(--text);
-      background: var(--bg);
-    }
+    #timer-input-row { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 8px 10px 0; }
+    #timer-input-row input { width: 44px; text-align: center; border: 1px solid var(--border); border-radius: 6px; padding: 4px; font-size: 13px; color: var(--text); background: var(--bg); }
     #timer-input-row span { font-size: 12px; color: var(--muted); }
-
-    /* Tasks */
-    #tasks-card {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 200px;
-    }
+    #tasks-card { flex: 1; display: flex; flex-direction: column; min-height: 200px; }
     #tasks-card .card-header { color: var(--purple); flex-shrink: 0; }
-    .task-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 6px 8px;
-    }
+    .task-list { flex: 1; overflow-y: auto; padding: 6px 8px; }
     .task-list::-webkit-scrollbar { width: 4px; }
     .task-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .task-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 7px;
-      padding: 5px 4px;
-      border-radius: 6px;
-      font-size: 12px;
-      line-height: 1.4;
-    }
+    .task-item { display: flex; align-items: flex-start; gap: 7px; padding: 5px 4px; border-radius: 6px; font-size: 12px; line-height: 1.4; }
     .task-item:hover { background: var(--bg); }
-    .task-item input[type=checkbox] {
-      margin-top: 1px;
-      flex-shrink: 0;
-      accent-color: var(--purple);
-      cursor: pointer;
-    }
-    .task-item label {
-      flex: 1;
-      cursor: pointer;
-      word-break: break-all;
-    }
+    .task-item input[type=checkbox] { margin-top: 1px; flex-shrink: 0; accent-color: var(--purple); cursor: pointer; }
+    .task-item label { flex: 1; cursor: pointer; word-break: break-all; }
     .task-item.done label { text-decoration: line-through; color: var(--muted); }
-    .task-item .tdel {
-      opacity: 0;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 13px;
-      padding: 0 2px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
+    .task-item .tdel { opacity: 0; background: none; border: none; cursor: pointer; color: var(--muted); font-size: 13px; padding: 0 2px; border-radius: 3px; flex-shrink: 0; }
     .task-item:hover .tdel { opacity: 1; }
     .task-item .tdel:hover { background: var(--border); }
-
-    .task-add-row {
-      display: flex;
-      gap: 6px;
-      padding: 6px 8px;
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .task-add-row input {
-      flex: 1;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 5px 8px;
-      font-size: 12px;
-      outline: none;
-      color: var(--text);
-      background: var(--bg);
-    }
+    .task-add-row { display: flex; gap: 6px; padding: 6px 8px; border-top: 1px solid var(--border); flex-shrink: 0; }
+    .task-add-row input { flex: 1; border: 1px solid var(--border); border-radius: 8px; padding: 5px 8px; font-size: 12px; outline: none; color: var(--text); background: var(--bg); }
     .task-add-row input:focus { border-color: var(--purple); }
-    .task-add-row button {
-      background: var(--purple);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 5px 10px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    /* ── Modal ── */
-    .overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 999;
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    }
+    .task-add-row button { background: var(--purple); color: white; border: none; border-radius: 8px; padding: 5px 10px; font-size: 12px; cursor: pointer; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
     .overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 24px;
-      width: 340px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-    }
+    .modal { background: var(--card); border-radius: 16px; padding: 24px; width: 340px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
     .modal h3 { font-size: 15px; font-weight: 600; }
-    .modal input, .modal select {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 13px;
-      outline: none;
-      color: var(--text);
-      background: var(--bg);
-    }
+    .modal p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .modal input { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; outline: none; color: var(--text); background: var(--bg); }
     .modal input:focus { border-color: var(--accent); }
     .modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
-    .modal-btns button {
-      padding: 7px 18px;
-      border-radius: 8px;
-      font-size: 13px;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-    }
-    .modal-btns .primary {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-      font-weight: 500;
-    }
+    .modal-btns button { padding: 7px 18px; border-radius: 8px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+    .modal-btns .primary { background: var(--accent); color: white; border-color: var(--accent); font-weight: 500; }
     .modal-btns .danger { color: var(--red); }
-
-    /* Color dots for columns */
-    .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 4px;
-    }
+    #setup-overlay .modal { text-align: center; align-items: center; }
+    .setup-btns { display: flex; gap: 10px; width: 100%; }
+    .setup-btns button { flex: 1; padding: 10px; border-radius: 10px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text); transition: filter 0.15s; }
+    .setup-btns button.primary { background: var(--accent); color: white; border-color: var(--accent); }
+    .setup-btns button:hover { filter: brightness(0.95); }
+    #file-indicator { font-size: 11px; color: var(--muted); }
+    #file-indicator.saving { color: var(--green); }
   </style>
 </head>
 <body>
 
-<!-- Header -->
 <header>
   <div class="left">
     <span class="hdate" id="h-date"></span>
+    <span id="file-indicator"></span>
   </div>
   <div class="right">
+    <button id="btn-change-file" title="データファイルを変更">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    </button>
     <button id="btn-settings" title="設定">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-      </svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
   </div>
 </header>
 
-<!-- Main -->
 <div class="main">
-
-  <!-- Left Column -->
   <div class="col-left">
-
-    <!-- Weather -->
     <div class="card" id="weather-card">
       <div class="weather-title">天気</div>
       <div class="weather-main">
@@ -592,14 +163,10 @@
       </div>
       <div class="weather-detail" id="w-detail"></div>
     </div>
-
-    <!-- Clock -->
     <div class="card" id="clock-card">
       <div id="clock-time">00:00<span id="clock-sec">:00</span></div>
       <div id="clock-date"></div>
     </div>
-
-    <!-- Calendar -->
     <div class="card" id="cal-card">
       <div class="cal-nav">
         <button id="cal-prev">‹</button>
@@ -608,59 +175,38 @@
       </div>
       <div class="cal-grid" id="cal-grid"></div>
     </div>
-
-    <!-- Holidays -->
     <div class="card" id="holidays-card">
       <div class="holidays-title">今後の祝日</div>
       <div id="holidays-list"></div>
     </div>
-
   </div>
 
-  <!-- Center Column -->
   <div class="col-center">
-
-    <!-- Site Icons -->
     <div id="site-icons">
       <a class="site-icon-item" href="https://www.kechiiiiin.com/" target="_blank" rel="noopener">
-        <div class="site-icon-box">
-          <img src="https://www.kechiiiiin.com/favicon.ico" alt="kechiiiiin"
-               onerror="this.src='https://www.google.com/s2/favicons?domain=kechiiiiin.com&sz=64'">
-        </div>
-        <span class="site-icon-label">まあ、そうかもしれない</span>
+        <div class="site-icon-box"><img src="https://www.kechiiiiin.com/favicon.ico" alt="" onerror="this.src='https://www.google.com/s2/favicons?domain=kechiiiiin.com&sz=64'"></div>
+        <span class="site-icon-label">kechiiiiin</span>
       </a>
       <a class="site-icon-item" href="https://listen.style/p/kechiiiiin" target="_blank" rel="noopener">
-        <div class="site-icon-box">
-          <img src="https://images.kechiiiiin.com/icon/%E3%81%91%E3%81%A1%E3%83%BC%E3%82%93%E3%83%9B%E3%82%9A%E3%83%83%E3%83%88%E3%82%99%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88.png" alt="kechiiiiin radio">
-        </div>
-        <span class="site-icon-label">けちーんのラジオ</span>
+        <div class="site-icon-box"><img src="kechiiiiin-radio.png" alt=""></div>
+        <span class="site-icon-label">listen / kechiiiiin</span>
       </a>
       <a class="site-icon-item" href="https://listen.style/p/itsumaji-radio" target="_blank" rel="noopener">
-        <div class="site-icon-box">
-          <img src="https://images.kechiiiiin.com/icon/%E3%81%84%E3%81%A4%E3%81%BE%E3%81%97%E3%82%99%E3%83%A9%E3%82%B7%E3%82%99%E3%82%AA.jpg" alt="いつまじラジオ">
-        </div>
+        <div class="site-icon-box"><img src="itsumaji-radio.png" alt=""></div>
         <span class="site-icon-label">いつまじラジオ</span>
       </a>
     </div>
-
-    <!-- Memo -->
     <div class="card" id="memo-card">
       <div class="card-header">
         <span>メモ</span>
-        <span style="font-size:10px;color:var(--muted);font-weight:400">Ctrl+Enter で送信</span>
+        <span style="font-size:10px;color:var(--muted);font-weight:400">自動保存</span>
       </div>
       <textarea id="memo-textarea" placeholder="ここに自由にメモを書けます..."></textarea>
     </div>
-
-    <!-- Link Columns -->
     <div class="links-area" id="links-area"></div>
-
   </div>
 
-  <!-- Right Column -->
   <div class="col-right">
-
-    <!-- Stopwatch -->
     <div class="card" id="sw-card">
       <div class="card-header" style="color:var(--green)">⏱ ストップウォッチ</div>
       <div id="sw-display">00:00.00</div>
@@ -671,17 +217,12 @@
       </div>
       <div class="sw-laps" id="sw-laps"></div>
     </div>
-
-    <!-- Timer -->
     <div class="card" id="timer-card">
       <div class="card-header" style="color:var(--blue)">⏲ タイマー</div>
       <div id="timer-input-row">
-        <input type="number" id="t-h" min="0" max="99" value="0" placeholder="時">
-        <span>時</span>
-        <input type="number" id="t-m" min="0" max="59" value="5" placeholder="分">
-        <span>分</span>
-        <input type="number" id="t-s" min="0" max="59" value="0" placeholder="秒">
-        <span>秒</span>
+        <input type="number" id="t-h" min="0" max="99" value="0"><span>時</span>
+        <input type="number" id="t-m" min="0" max="59" value="5"><span>分</span>
+        <input type="number" id="t-s" min="0" max="59" value="0"><span>秒</span>
       </div>
       <div id="timer-display">00:05:00</div>
       <div class="timer-btns">
@@ -689,8 +230,6 @@
         <button id="t-reset">リセット</button>
       </div>
     </div>
-
-    <!-- Tasks -->
     <div class="card" id="tasks-card">
       <div class="card-header" style="color:var(--purple)">
         <span>✓ タスク</span>
@@ -702,13 +241,24 @@
         <button id="task-add-btn">追加</button>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- Modal -->
+<!-- 初回セットアップ -->
+<div class="overlay" id="setup-overlay">
+  <div class="modal">
+    <h3>📁 データファイルの設定</h3>
+    <p>リンク・タスク・メモを JSON ファイルで管理します。<br>初回のみファイルを選択または新規作成してください。</p>
+    <div class="setup-btns">
+      <button id="setup-new" class="primary">✨ 新規作成</button>
+      <button id="setup-open">📂 既存を開く</button>
+    </div>
+  </div>
+</div>
+
+<!-- リンク編集モーダル -->
 <div class="overlay" id="modal">
-  <div class="modal" id="modal-body">
+  <div class="modal">
     <h3 id="modal-title">リンクを追加</h3>
     <input type="text" id="m-emoji" placeholder="絵文字 (例: 🌐)" maxlength="4">
     <input type="text" id="m-label" placeholder="ラベル (例: GitHub)">
@@ -723,571 +273,239 @@
 </div>
 
 <script>
-/* ═══════════════════════════════
-   CLOCK
-═══════════════════════════════ */
-const DAYS = ['日','月','火','水','木','金','土'];
-function updateClock() {
-  const n = new Date();
-  const hh = String(n.getHours()).padStart(2,'0');
-  const mm = String(n.getMinutes()).padStart(2,'0');
-  const ss = String(n.getSeconds()).padStart(2,'0');
-  document.getElementById('clock-time').innerHTML =
-    `${hh}:${mm}<span id="clock-sec">:${ss}</span>`;
-  document.getElementById('clock-date').textContent =
-    `${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 ${DAYS[n.getDay()]}曜日`;
-  const yr = n.getFullYear(), mo = n.getMonth()+1, dy = n.getDate(), dow = DAYS[n.getDay()];
-  document.getElementById('h-date').textContent =
-    `${yr}-${String(mo).padStart(2,'0')}-${String(dy).padStart(2,'0')} (${dow})`;
+/* CLOCK */
+const DAYS=['日','月','火','水','木','金','土'];
+function updateClock(){
+  const n=new Date();
+  const hh=String(n.getHours()).padStart(2,'0'),mm=String(n.getMinutes()).padStart(2,'0'),ss=String(n.getSeconds()).padStart(2,'0');
+  document.getElementById('clock-time').innerHTML=`${hh}:${mm}<span id="clock-sec">:${ss}</span>`;
+  document.getElementById('clock-date').textContent=`${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 ${DAYS[n.getDay()]}曜日`;
+  document.getElementById('h-date').textContent=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')} (${DAYS[n.getDay()]})`;
 }
-updateClock();
-setInterval(updateClock, 1000);
+updateClock(); setInterval(updateClock,1000);
 
-/* ═══════════════════════════════
-   JAPANESE HOLIDAYS
-═══════════════════════════════ */
-const HOLIDAYS = {
-  '2025-01-01':'元日','2025-01-13':'成人の日',
-  '2025-02-11':'建国記念の日','2025-02-23':'天皇誕生日',
-  '2025-03-20':'春分の日',
-  '2025-04-29':'昭和の日',
-  '2025-05-03':'憲法記念日','2025-05-04':'みどりの日','2025-05-05':'こどもの日','2025-05-06':'振替休日',
-  '2025-07-21':'海の日','2025-08-11':'山の日',
-  '2025-09-15':'敬老の日','2025-09-23':'秋分の日',
-  '2025-10-13':'スポーツの日',
-  '2025-11-03':'文化の日','2025-11-23':'勤労感謝の日',
-  '2026-01-01':'元日','2026-01-12':'成人の日',
-  '2026-02-11':'建国記念の日','2026-02-23':'天皇誕生日',
-  '2026-03-20':'春分の日',
-  '2026-04-29':'昭和の日',
-  '2026-05-03':'憲法記念日','2026-05-04':'みどりの日','2026-05-05':'こどもの日',
-  '2026-07-20':'海の日','2026-08-11':'山の日',
-  '2026-09-21':'敬老の日','2026-09-23':'秋分の日',
-  '2026-10-12':'スポーツの日',
-  '2026-11-03':'文化の日','2026-11-23':'勤労感謝の日',
-};
-
-function dateKey(y,m,d) {
-  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
-
-function renderHolidays() {
-  const today = new Date();
-  const el = document.getElementById('holidays-list');
-  el.innerHTML = '';
-  const upcoming = Object.entries(HOLIDAYS)
-    .filter(([k]) => k >= dateKey(today.getFullYear(), today.getMonth()+1, today.getDate()))
-    .slice(0, 6);
-  upcoming.forEach(([k, name]) => {
-    const [,m,d] = k.split('-');
-    const div = document.createElement('div');
-    div.className = 'holiday-item';
-    div.innerHTML = `<span class="hdate2">${m}-${d}</span><span class="hname">${name}</span>`;
+/* HOLIDAYS */
+const HOLIDAYS={'2025-01-01':'元日','2025-01-13':'成人の日','2025-02-11':'建国記念の日','2025-02-23':'天皇誕生日','2025-03-20':'春分の日','2025-04-29':'昭和の日','2025-05-03':'憲法記念日','2025-05-04':'みどりの日','2025-05-05':'こどもの日','2025-05-06':'振替休日','2025-07-21':'海の日','2025-08-11':'山の日','2025-09-15':'敬老の日','2025-09-23':'秋分の日','2025-10-13':'スポーツの日','2025-11-03':'文化の日','2025-11-23':'勤労感謝の日','2026-01-01':'元日','2026-01-12':'成人の日','2026-02-11':'建国記念の日','2026-02-23':'天皇誕生日','2026-03-20':'春分の日','2026-04-29':'昭和の日','2026-05-03':'憲法記念日','2026-05-04':'みどりの日','2026-05-05':'こどもの日','2026-07-20':'海の日','2026-08-11':'山の日','2026-09-21':'敬老の日','2026-09-23':'秋分の日','2026-10-12':'スポーツの日','2026-11-03':'文化の日','2026-11-23':'勤労感謝の日'};
+function dateKey(y,m,d){return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function renderHolidays(){
+  const today=new Date(),el=document.getElementById('holidays-list');
+  el.innerHTML='';
+  Object.entries(HOLIDAYS).filter(([k])=>k>=dateKey(today.getFullYear(),today.getMonth()+1,today.getDate())).slice(0,6).forEach(([k,name])=>{
+    const[,m,d]=k.split('-'),div=document.createElement('div');
+    div.className='holiday-item';div.innerHTML=`<span class="hdate2">${m}-${d}</span><span class="hname">${name}</span>`;
     el.appendChild(div);
   });
 }
 renderHolidays();
 
-/* ═══════════════════════════════
-   CALENDAR
-═══════════════════════════════ */
-let calYear = new Date().getFullYear();
-let calMonth = new Date().getMonth();
-
-function renderCalendar() {
-  const today = new Date();
-  document.getElementById('cal-label').textContent =
-    `${calYear}年${calMonth+1}月`;
-
-  const grid = document.getElementById('cal-grid');
-  grid.innerHTML = '';
-
-  // Day headers
-  DAYS.forEach((d,i) => {
-    const span = document.createElement('div');
-    span.className = 'dow';
-    span.textContent = d;
-    grid.appendChild(span);
-  });
-
-  const firstDay = new Date(calYear, calMonth, 1).getDay();
-  const lastDate = new Date(calYear, calMonth+1, 0).getDate();
-  const prevLast = new Date(calYear, calMonth, 0).getDate();
-
-  // Prev month
-  for (let i = firstDay - 1; i >= 0; i--) {
-    const span = document.createElement('div');
-    span.className = 'cal-day other-month';
-    span.textContent = prevLast - i;
-    grid.appendChild(span);
-  }
-
-  // Current month
-  for (let d = 1; d <= lastDate; d++) {
-    const span = document.createElement('div');
-    const dow = new Date(calYear, calMonth, d).getDay();
-    const key = dateKey(calYear, calMonth+1, d);
-    const isToday = d === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear();
-    const isHoliday = HOLIDAYS[key];
-
-    let cls = 'cal-day';
-    if (isToday) cls += ' today';
-    else if (isHoliday) cls += ' holiday';
-    else if (dow === 0) cls += ' sun';
-    else if (dow === 6) cls += ' sat';
-
-    span.className = cls;
-    span.textContent = d;
-    if (isHoliday && !isToday) span.title = isHoliday;
-    grid.appendChild(span);
+/* CALENDAR */
+let calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
+function renderCalendar(){
+  const today=new Date();
+  document.getElementById('cal-label').textContent=`${calYear}年${calMonth+1}月`;
+  const grid=document.getElementById('cal-grid');grid.innerHTML='';
+  DAYS.forEach(d=>{const s=document.createElement('div');s.className='dow';s.textContent=d;grid.appendChild(s);});
+  const firstDay=new Date(calYear,calMonth,1).getDay(),lastDate=new Date(calYear,calMonth+1,0).getDate(),prevLast=new Date(calYear,calMonth,0).getDate();
+  for(let i=firstDay-1;i>=0;i--){const s=document.createElement('div');s.className='cal-day other-month';s.textContent=prevLast-i;grid.appendChild(s);}
+  for(let d=1;d<=lastDate;d++){
+    const s=document.createElement('div'),dow=new Date(calYear,calMonth,d).getDay(),key=dateKey(calYear,calMonth+1,d);
+    const isToday=d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear(),isHoliday=HOLIDAYS[key];
+    let cls='cal-day';
+    if(isToday)cls+=' today';else if(isHoliday)cls+=' holiday';else if(dow===0)cls+=' sun';else if(dow===6)cls+=' sat';
+    s.className=cls;s.textContent=d;if(isHoliday&&!isToday)s.title=isHoliday;grid.appendChild(s);
   }
 }
-
-document.getElementById('cal-prev').addEventListener('click', () => {
-  calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
-  renderCalendar();
-});
-document.getElementById('cal-next').addEventListener('click', () => {
-  calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
-  renderCalendar();
-});
+document.getElementById('cal-prev').addEventListener('click',()=>{calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();});
+document.getElementById('cal-next').addEventListener('click',()=>{calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();});
 renderCalendar();
 
-/* ═══════════════════════════════
-   WEATHER (Open-Meteo, no key)
-═══════════════════════════════ */
-const WMO = {
-  0:'快晴',1:'晴れ',2:'一部曇り',3:'曇り',
-  45:'霧',48:'霧',51:'霧雨',53:'霧雨',55:'霧雨',
-  61:'小雨',63:'雨',65:'大雨',71:'小雪',73:'雪',75:'大雪',
-  80:'にわか雨',81:'にわか雨',82:'激しい雨',
-  95:'雷雨',96:'雷雨',99:'激しい雷雨'
-};
-const WMO_ICON = {
-  0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',
-  51:'🌦',53:'🌦',55:'🌦',61:'🌧',63:'🌧',65:'🌧',
-  71:'🌨',73:'❄️',75:'❄️',80:'🌧',81:'🌧',82:'⛈',
-  95:'⛈',96:'⛈',99:'⛈'
-};
-
-function fetchWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,windspeed_10m,relative_humidity_2m&timezone=Asia/Tokyo`;
-  fetch(url).then(r => r.json()).then(data => {
-    const c = data.current;
-    const code = c.weathercode;
-    document.getElementById('w-icon').textContent = WMO_ICON[code] || '🌡';
-    document.getElementById('w-temp').textContent = Math.round(c.temperature_2m);
-    document.getElementById('w-desc').textContent = WMO[code] || '不明';
-    document.getElementById('w-detail').textContent =
-      `💧 ${c.relative_humidity_2m}%　💨 ${Math.round(c.windspeed_10m)}km/h`;
-  }).catch(() => {
-    document.getElementById('w-desc').textContent = '取得失敗';
-  });
+/* WEATHER */
+const WMO={0:'快晴',1:'晴れ',2:'一部曇り',3:'曇り',45:'霧',48:'霧',51:'霧雨',53:'霧雨',55:'霧雨',61:'小雨',63:'雨',65:'大雨',71:'小雪',73:'雪',75:'大雪',80:'にわか雨',81:'にわか雨',82:'激しい雨',95:'雷雨',96:'雷雨',99:'激しい雷雨'};
+const WMO_ICON={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌦',61:'🌧',63:'🌧',65:'🌧',71:'🌨',73:'❄️',75:'❄️',80:'🌧',81:'🌧',82:'⛈',95:'⛈',96:'⛈',99:'⛈'};
+function fetchWeather(lat,lon){
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,windspeed_10m,relative_humidity_2m&timezone=Asia/Tokyo`)
+    .then(r=>r.json()).then(data=>{
+      const c=data.current,code=c.weathercode;
+      document.getElementById('w-icon').textContent=WMO_ICON[code]||'🌡';
+      document.getElementById('w-temp').textContent=Math.round(c.temperature_2m);
+      document.getElementById('w-desc').textContent=WMO[code]||'不明';
+      document.getElementById('w-detail').textContent=`💧 ${c.relative_humidity_2m}%　💨 ${Math.round(c.windspeed_10m)}km/h`;
+    }).catch(()=>{document.getElementById('w-desc').textContent='取得失敗';});
+}
+function initWeather(){
+  if(AppData.coords){fetchWeather(AppData.coords.lat,AppData.coords.lon);}
+  else if(navigator.geolocation){navigator.geolocation.getCurrentPosition(pos=>{AppData.coords={lat:pos.coords.latitude,lon:pos.coords.longitude};saveData();fetchWeather(AppData.coords.lat,AppData.coords.lon);},()=>fetchWeather(35.6895,139.6917));}
+  else{fetchWeather(35.6895,139.6917);}
 }
 
-const cachedCoords = JSON.parse(localStorage.getItem('nt_coords') || 'null');
-if (cachedCoords) {
-  fetchWeather(cachedCoords.lat, cachedCoords.lon);
-} else if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      const lat = pos.coords.latitude, lon = pos.coords.longitude;
-      localStorage.setItem('nt_coords', JSON.stringify({ lat, lon }));
-      fetchWeather(lat, lon);
-    },
-    () => fetchWeather(35.6895, 139.6917)
-  );
-} else {
-  fetchWeather(35.6895, 139.6917);
-}
-
-/* ═══════════════════════════════
-   MEMO
-═══════════════════════════════ */
-const memoTA = document.getElementById('memo-textarea');
-memoTA.value = localStorage.getItem('nt_memo') || '';
-memoTA.addEventListener('input', () => localStorage.setItem('nt_memo', memoTA.value));
-memoTA.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && e.ctrlKey) {
-    localStorage.setItem('nt_memo', memoTA.value);
-    // flash saved
-    memoTA.style.background = '#f0fff4';
-    setTimeout(() => memoTA.style.background = '', 500);
-  }
-});
-
-/* ═══════════════════════════════
-   LINK COLUMNS
-═══════════════════════════════ */
-const DEFAULT_COLS = [
-  {
-    id: 'col1', name: 'GENERAL', color: '#34a85a',
-    links: [
-      {emoji:'📧', label:'Gmail',    url:'https://mail.google.com'},
-      {emoji:'📅', label:'Calendar', url:'https://calendar.google.com'},
-      {emoji:'🗒', label:'Keep',     url:'https://keep.google.com'},
-    ]
-  },
-  {
-    id: 'col2', name: 'GORAKU', color: '#1a73e8',
-    links: [
-      {emoji:'📺', label:'YouTube',  url:'https://www.youtube.com'},
-      {emoji:'🐦', label:'X',        url:'https://x.com'},
-      {emoji:'🦋', label:'Bluesky',  url:'https://bsky.app'},
-      {emoji:'🎮', label:'rururu',   url:'https://rururu.app/'},
-    ]
-  },
-  {
-    id: 'col3', name: 'PROJECTS', color: '#f5900c',
-    links: [
-      {emoji:'🐙', label:'GitHub',   url:'https://github.com'},
-    ]
-  },
+/* FILE STORAGE */
+const DEFAULT_COLS=[
+  {id:'col1',name:'GENERAL',color:'#34a85a',links:[{emoji:'📧',label:'Gmail',url:'https://mail.google.com'},{emoji:'📅',label:'Calendar',url:'https://calendar.google.com'},{emoji:'🗒',label:'Keep',url:'https://keep.google.com'}]},
+  {id:'col2',name:'GORAKU',color:'#1a73e8',links:[{emoji:'📺',label:'YouTube',url:'https://www.youtube.com'},{emoji:'🐦',label:'X',url:'https://x.com'},{emoji:'🦋',label:'Bluesky',url:'https://bsky.app'},{emoji:'🎮',label:'rururu',url:'https://rururu.app/'}]},
+  {id:'col3',name:'PROJECTS',color:'#f5900c',links:[{emoji:'🐙',label:'GitHub',url:'https://github.com'}]},
 ];
+let AppData={version:1,memo:'',cols:JSON.parse(JSON.stringify(DEFAULT_COLS)),tasks:[],coords:null};
+let fileHandle=null,saveTimer=null;
 
-function loadCols() {
-  try { return JSON.parse(localStorage.getItem('nt_cols')) || DEFAULT_COLS; }
-  catch { return DEFAULT_COLS; }
+function showSaveIndicator(name){
+  const el=document.getElementById('file-indicator');
+  el.textContent='💾 保存中...';el.className='saving';
+  setTimeout(()=>{el.textContent=name?`📄 ${name}`:'';el.className='';},800);
 }
-function saveCols(cols) { localStorage.setItem('nt_cols', JSON.stringify(cols)); }
+function saveData(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    if(!fileHandle)return;
+    try{
+      const w=await fileHandle.createWritable();
+      await w.write(JSON.stringify(AppData,null,2));await w.close();
+      const f=await fileHandle.getFile();showSaveIndicator(f.name);
+    }catch(e){console.warn('Save failed:',e);}
+  },400);
+}
+async function loadFromFile(){
+  const file=await fileHandle.getFile(),text=(await file.text()).trim();
+  if(text){try{const s=JSON.parse(text);AppData={...AppData,...s};if(!AppData.cols||!AppData.cols.length)AppData.cols=JSON.parse(JSON.stringify(DEFAULT_COLS));}catch(e){}}
+  else{AppData.cols=JSON.parse(JSON.stringify(DEFAULT_COLS));saveData();}
+  document.getElementById('file-indicator').textContent=`📄 ${file.name}`;
+}
 
-// Migration: ensure new default links are present
-function migrateLinks() {
-  const cols = loadCols();
-  let changed = false;
-  DEFAULT_COLS.forEach(defCol => {
-    const col = cols.find(c => c.id === defCol.id);
-    if (!col) return;
-    defCol.links.forEach(defLink => {
-      if (!col.links.some(l => l.url === defLink.url)) {
-        col.links.push(defLink);
-        changed = true;
-      }
-    });
+/* IndexedDB */
+function idbOpen(){return new Promise((res,rej)=>{const r=indexedDB.open('newtab-db',1);r.onupgradeneeded=e=>e.target.result.createObjectStore('store');r.onsuccess=e=>res(e.target.result);r.onerror=rej;});}
+async function idbGet(key){const db=await idbOpen();return new Promise(res=>{const tx=db.transaction('store','readonly'),r=tx.objectStore('store').get(key);r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);});}
+async function idbSet(key,val){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction('store','readwrite');tx.objectStore('store').put(val,key);tx.oncomplete=res;tx.onerror=rej;});}
+
+async function initStorage(){
+  try{
+    const stored=await idbGet('fileHandle');
+    if(stored){
+      let perm=await stored.queryPermission({mode:'readwrite'});
+      if(perm!=='granted')perm=await stored.requestPermission({mode:'readwrite'});
+      if(perm==='granted'){fileHandle=stored;await loadFromFile();return true;}
+    }
+  }catch(e){}
+  return false;
+}
+async function setupFile(mode){
+  try{
+    if(mode==='new'){fileHandle=await window.showSaveFilePicker({suggestedName:'newtab-data.json',types:[{description:'JSON',accept:{'application/json':['.json']}}]});}
+    else{[fileHandle]=await window.showOpenFilePicker({types:[{description:'JSON',accept:{'application/json':['.json']}}]});}
+    await idbSet('fileHandle',fileHandle);await loadFromFile();return true;
+  }catch(e){return false;}
+}
+document.getElementById('setup-new').addEventListener('click',async()=>{if(await setupFile('new')){document.getElementById('setup-overlay').classList.remove('open');startApp();}});
+document.getElementById('setup-open').addEventListener('click',async()=>{if(await setupFile('open')){document.getElementById('setup-overlay').classList.remove('open');startApp();}});
+document.getElementById('btn-change-file').addEventListener('click',async()=>{if(await setupFile('open'))startApp();});
+
+/* MEMO */
+function initMemo(){
+  const ta=document.getElementById('memo-textarea');
+  ta.value=AppData.memo||'';
+  ta.addEventListener('input',()=>{AppData.memo=ta.value;saveData();});
+}
+
+/* LINKS */
+function migrateLinks(){
+  let changed=false;
+  DEFAULT_COLS.forEach(defCol=>{
+    const col=AppData.cols.find(c=>c.id===defCol.id);if(!col)return;
+    defCol.links.forEach(defLink=>{if(!col.links.some(l=>l.url===defLink.url)){col.links.push(defLink);changed=true;}});
   });
-  if (changed) saveCols(cols);
+  if(changed)saveData();
 }
-migrateLinks();
-
-function renderCols() {
-  const area = document.getElementById('links-area');
-  const cols = loadCols();
-  area.innerHTML = '';
-
-  cols.forEach((col, ci) => {
-    const div = document.createElement('div');
-    div.className = 'card link-col';
-
-    const hdr = document.createElement('div');
-    hdr.className = 'card-header';
-    hdr.style.color = col.color;
-    hdr.innerHTML = `<span>${col.name}</span>`;
-    const addBtn = document.createElement('button');
-    addBtn.className = 'add-btn';
-    addBtn.textContent = '+';
-    addBtn.title = 'リンクを追加';
-    addBtn.addEventListener('click', () => openLinkModal(ci, -1));
-    hdr.appendChild(addBtn);
-    div.appendChild(hdr);
-
-    const list = document.createElement('div');
-    list.className = 'link-list';
-
-    col.links.forEach((lk, li) => {
-      const a = document.createElement('a');
-      a.className = 'link-item';
-      a.href = lk.url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      const domain = (() => { try { return new URL(lk.url).hostname; } catch { return ''; } })();
-      const faviconSrc = domain
-        ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32`
-        : '';
-      a.innerHTML = `
-        <div class="favicon">
-          ${faviconSrc
-            ? `<img src="${faviconSrc}" alt="" onerror="this.style.display='none';this.parentNode.textContent='${(lk.emoji||'🌐').replace(/'/g,'')}';">`
-            : (lk.emoji || '🌐')}
-        </div>
-        <span class="lname">${lk.label}</span>
-      `;
-      const editBtn = document.createElement('button');
-      editBtn.className = 'ledit';
-      editBtn.textContent = '編集';
-      editBtn.addEventListener('click', e => { e.preventDefault(); openLinkModal(ci, li); });
-      a.appendChild(editBtn);
-      list.appendChild(a);
+function renderCols(){
+  const area=document.getElementById('links-area');area.innerHTML='';
+  AppData.cols.forEach((col,ci)=>{
+    const div=document.createElement('div');div.className='card link-col';
+    const hdr=document.createElement('div');hdr.className='card-header';hdr.style.color=col.color;hdr.innerHTML=`<span>${col.name}</span>`;
+    const ab=document.createElement('button');ab.className='add-btn';ab.textContent='+';ab.title='リンクを追加';ab.addEventListener('click',()=>openLinkModal(ci,-1));hdr.appendChild(ab);div.appendChild(hdr);
+    const list=document.createElement('div');list.className='link-list';
+    col.links.forEach((lk,li)=>{
+      const a=document.createElement('a');a.className='link-item';a.href=lk.url;a.target='_blank';a.rel='noopener';
+      const domain=(()=>{try{return new URL(lk.url).hostname;}catch{return '';}})();
+      const fsrc=domain?`https://www.google.com/s2/favicons?domain=${domain}&sz=32`:'';
+      a.innerHTML=`<div class="favicon">${fsrc?`<img src="${fsrc}" alt="" onerror="this.style.display='none';this.parentNode.textContent='${(lk.emoji||'🌐').replace(/'/g,'')}'">`:(lk.emoji||'🌐')}</div><span class="lname">${lk.label}</span>`;
+      const eb=document.createElement('button');eb.className='ledit';eb.textContent='編集';eb.addEventListener('click',e=>{e.preventDefault();openLinkModal(ci,li);});
+      a.appendChild(eb);list.appendChild(a);
     });
-
-    const addRow = document.createElement('div');
-    addRow.className = 'add-link-btn';
-    addRow.innerHTML = `<span>＋</span><span>追加</span>`;
-    addRow.addEventListener('click', () => openLinkModal(ci, -1));
-    list.appendChild(addRow);
-
-    div.appendChild(list);
-    area.appendChild(div);
+    const ar=document.createElement('div');ar.className='add-link-btn';ar.innerHTML='<span>＋</span><span>追加</span>';ar.addEventListener('click',()=>openLinkModal(ci,-1));list.appendChild(ar);
+    div.appendChild(list);area.appendChild(div);
   });
 }
-renderCols();
-
-/* Modal logic for links */
-let modalColIdx = -1, modalLinkIdx = -1;
-
-function openLinkModal(ci, li) {
-  modalColIdx = ci; modalLinkIdx = li;
-  const cols = loadCols();
-  const isEdit = li >= 0;
-  document.getElementById('modal-title').textContent = isEdit ? 'リンクを編集' : 'リンクを追加';
-  document.getElementById('m-emoji').value = isEdit ? (cols[ci].links[li].emoji || '') : '';
-  document.getElementById('m-label').value = isEdit ? cols[ci].links[li].label : '';
-  document.getElementById('m-url').value   = isEdit ? cols[ci].links[li].url : '';
-  document.getElementById('m-delete').style.display = isEdit ? 'inline-block' : 'none';
-  document.getElementById('modal').classList.add('open');
-  document.getElementById('m-label').focus();
+let modalColIdx=-1,modalLinkIdx=-1;
+function openLinkModal(ci,li){
+  modalColIdx=ci;modalLinkIdx=li;const isEdit=li>=0,col=AppData.cols[ci];
+  document.getElementById('modal-title').textContent=isEdit?'リンクを編集':'リンクを追加';
+  document.getElementById('m-emoji').value=isEdit?(col.links[li].emoji||''):'';
+  document.getElementById('m-label').value=isEdit?col.links[li].label:'';
+  document.getElementById('m-url').value=isEdit?col.links[li].url:'';
+  document.getElementById('m-delete').style.display=isEdit?'inline-block':'none';
+  document.getElementById('modal').classList.add('open');document.getElementById('m-label').focus();
 }
-
-document.getElementById('m-cancel').addEventListener('click', () =>
-  document.getElementById('modal').classList.remove('open'));
-document.getElementById('modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('modal'))
-    document.getElementById('modal').classList.remove('open');
+document.getElementById('m-cancel').addEventListener('click',()=>document.getElementById('modal').classList.remove('open'));
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))document.getElementById('modal').classList.remove('open');});
+document.getElementById('m-save').addEventListener('click',()=>{
+  const emoji=document.getElementById('m-emoji').value.trim()||'🌐',label=document.getElementById('m-label').value.trim();
+  let url=document.getElementById('m-url').value.trim();if(!label||!url)return;if(!/^https?:\/\//i.test(url))url='https://'+url;
+  const entry={emoji,label,url};
+  if(modalLinkIdx>=0)AppData.cols[modalColIdx].links[modalLinkIdx]=entry;else AppData.cols[modalColIdx].links.push(entry);
+  saveData();renderCols();document.getElementById('modal').classList.remove('open');
 });
+document.getElementById('m-delete').addEventListener('click',()=>{AppData.cols[modalColIdx].links.splice(modalLinkIdx,1);saveData();renderCols();document.getElementById('modal').classList.remove('open');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('modal').classList.remove('open');});
 
-document.getElementById('m-save').addEventListener('click', () => {
-  const emoji = document.getElementById('m-emoji').value.trim() || '🌐';
-  const label = document.getElementById('m-label').value.trim();
-  let url = document.getElementById('m-url').value.trim();
-  if (!label || !url) return;
-  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-
-  const cols = loadCols();
-  const entry = { emoji, label, url };
-  if (modalLinkIdx >= 0) cols[modalColIdx].links[modalLinkIdx] = entry;
-  else cols[modalColIdx].links.push(entry);
-  saveCols(cols);
-  renderCols();
-  document.getElementById('modal').classList.remove('open');
+/* STOPWATCH */
+let swRunning=false,swStart=0,swElapsed=0,swRAF=null,swLaps=[];
+function formatSW(ms){return `${String(Math.floor(ms/60000)).padStart(2,'0')}:${String(Math.floor((ms%60000)/1000)).padStart(2,'0')}.${String(Math.floor((ms%1000)/10)).padStart(2,'0')}`;}
+function swTick(){document.getElementById('sw-display').textContent=formatSW(swElapsed+(Date.now()-swStart));swRAF=requestAnimationFrame(swTick);}
+document.getElementById('sw-start').addEventListener('click',function(){
+  if(!swRunning){swRunning=true;swStart=Date.now();swRAF=requestAnimationFrame(swTick);this.textContent='停止';this.style.background='var(--red)';this.style.borderColor='var(--red)';}
+  else{swRunning=false;swElapsed+=Date.now()-swStart;cancelAnimationFrame(swRAF);this.textContent='再開';this.style.background='var(--green)';this.style.borderColor='var(--green)';}
 });
+document.getElementById('sw-lap').addEventListener('click',()=>{if(!swRunning)return;swLaps.push(swElapsed+(Date.now()-swStart));document.getElementById('sw-laps').innerHTML=swLaps.map((l,i)=>`<div>Lap ${i+1}: ${formatSW(l)}</div>`).reverse().join('');});
+document.getElementById('sw-reset').addEventListener('click',()=>{swRunning=false;cancelAnimationFrame(swRAF);swElapsed=0;swLaps=[];document.getElementById('sw-display').textContent='00:00.00';document.getElementById('sw-laps').innerHTML='';const b=document.getElementById('sw-start');b.textContent='開始';b.style.background='var(--green)';b.style.borderColor='var(--green)';});
 
-document.getElementById('m-delete').addEventListener('click', () => {
-  const cols = loadCols();
-  cols[modalColIdx].links.splice(modalLinkIdx, 1);
-  saveCols(cols);
-  renderCols();
-  document.getElementById('modal').classList.remove('open');
+/* TIMER */
+let timerRunning=false,timerRemain=300,timerInterval=null;
+function getTimerInput(){return(parseInt(document.getElementById('t-h').value)||0)*3600+(parseInt(document.getElementById('t-m').value)||0)*60+(parseInt(document.getElementById('t-s').value)||0);}
+function formatTimer(s){return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+function updateTimerDisplay(){document.getElementById('timer-display').textContent=formatTimer(timerRemain);}
+['t-h','t-m','t-s'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{timerRemain=getTimerInput();updateTimerDisplay();}));
+timerRemain=getTimerInput();updateTimerDisplay();
+document.getElementById('t-start').addEventListener('click',function(){
+  if(!timerRunning){
+    if(timerRemain<=0)timerRemain=getTimerInput();timerRunning=true;this.textContent='停止';this.style.background='var(--red)';this.style.borderColor='var(--red)';
+    timerInterval=setInterval(()=>{timerRemain--;updateTimerDisplay();if(timerRemain<=0){clearInterval(timerInterval);timerRunning=false;const b=document.getElementById('t-start');b.textContent='開始';b.style.background='var(--blue)';b.style.borderColor='var(--blue)';try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[0,.3,.6].forEach(d=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.setValueAtTime(.3,ctx.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d+.5);o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.5);});}catch(e){}}},1000);
+  }else{timerRunning=false;clearInterval(timerInterval);this.textContent='再開';this.style.background='var(--blue)';this.style.borderColor='var(--blue)';}
 });
+document.getElementById('t-reset').addEventListener('click',()=>{timerRunning=false;clearInterval(timerInterval);timerRemain=getTimerInput();updateTimerDisplay();const b=document.getElementById('t-start');b.textContent='開始';b.style.background='var(--blue)';b.style.borderColor='var(--blue)';});
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
-});
-
-/* ═══════════════════════════════
-   STOPWATCH
-═══════════════════════════════ */
-let swRunning = false, swStart = 0, swElapsed = 0, swRAF = null, swLaps = [];
-
-function formatSW(ms) {
-  const m = Math.floor(ms/60000);
-  const s = Math.floor((ms%60000)/1000);
-  const cs = Math.floor((ms%1000)/10);
-  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}.${String(cs).padStart(2,'0')}`;
-}
-
-function swTick() {
-  const now = swElapsed + (Date.now() - swStart);
-  document.getElementById('sw-display').textContent = formatSW(now);
-  swRAF = requestAnimationFrame(swTick);
-}
-
-document.getElementById('sw-start').addEventListener('click', function() {
-  if (!swRunning) {
-    swRunning = true;
-    swStart = Date.now();
-    swRAF = requestAnimationFrame(swTick);
-    this.textContent = '停止';
-    this.style.background = 'var(--red)';
-    this.style.borderColor = 'var(--red)';
-  } else {
-    swRunning = false;
-    swElapsed += Date.now() - swStart;
-    cancelAnimationFrame(swRAF);
-    this.textContent = '再開';
-    this.style.background = 'var(--green)';
-    this.style.borderColor = 'var(--green)';
-  }
-});
-
-document.getElementById('sw-lap').addEventListener('click', () => {
-  if (!swRunning) return;
-  const now = swElapsed + (Date.now() - swStart);
-  swLaps.push(now);
-  const el = document.getElementById('sw-laps');
-  el.innerHTML = swLaps.map((l,i) =>
-    `<div>Lap ${i+1}: ${formatSW(l)}</div>`
-  ).reverse().join('');
-});
-
-document.getElementById('sw-reset').addEventListener('click', () => {
-  swRunning = false;
-  cancelAnimationFrame(swRAF);
-  swElapsed = 0; swLaps = [];
-  document.getElementById('sw-display').textContent = '00:00.00';
-  document.getElementById('sw-laps').innerHTML = '';
-  const btn = document.getElementById('sw-start');
-  btn.textContent = '開始';
-  btn.style.background = 'var(--green)';
-  btn.style.borderColor = 'var(--green)';
-});
-
-/* ═══════════════════════════════
-   TIMER
-═══════════════════════════════ */
-let timerRunning = false, timerRemain = 300, timerInterval = null;
-
-function getTimerInput() {
-  const h = parseInt(document.getElementById('t-h').value) || 0;
-  const m = parseInt(document.getElementById('t-m').value) || 0;
-  const s = parseInt(document.getElementById('t-s').value) || 0;
-  return h * 3600 + m * 60 + s;
-}
-
-function formatTimer(sec) {
-  const h = Math.floor(sec/3600);
-  const m = Math.floor((sec%3600)/60);
-  const s = sec % 60;
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-
-function updateTimerDisplay() {
-  document.getElementById('timer-display').textContent = formatTimer(timerRemain);
-}
-
-document.getElementById('t-h').addEventListener('input', () => { timerRemain = getTimerInput(); updateTimerDisplay(); });
-document.getElementById('t-m').addEventListener('input', () => { timerRemain = getTimerInput(); updateTimerDisplay(); });
-document.getElementById('t-s').addEventListener('input', () => { timerRemain = getTimerInput(); updateTimerDisplay(); });
-timerRemain = getTimerInput();
-updateTimerDisplay();
-
-document.getElementById('t-start').addEventListener('click', function() {
-  if (!timerRunning) {
-    if (timerRemain <= 0) timerRemain = getTimerInput();
-    timerRunning = true;
-    this.textContent = '停止';
-    this.style.background = 'var(--red)';
-    this.style.borderColor = 'var(--red)';
-    timerInterval = setInterval(() => {
-      timerRemain--;
-      updateTimerDisplay();
-      if (timerRemain <= 0) {
-        clearInterval(timerInterval);
-        timerRunning = false;
-        document.getElementById('t-start').textContent = '開始';
-        document.getElementById('t-start').style.background = 'var(--blue)';
-        document.getElementById('t-start').style.borderColor = 'var(--blue)';
-        // Bell notification
-        try {
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
-          [0, 0.3, 0.6].forEach(delay => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.frequency.value = 880;
-            gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.5);
-            osc.start(ctx.currentTime + delay);
-            osc.stop(ctx.currentTime + delay + 0.5);
-          });
-        } catch(e) {}
-      }
-    }, 1000);
-  } else {
-    timerRunning = false;
-    clearInterval(timerInterval);
-    this.textContent = '再開';
-    this.style.background = 'var(--blue)';
-    this.style.borderColor = 'var(--blue)';
-  }
-});
-
-document.getElementById('t-reset').addEventListener('click', () => {
-  timerRunning = false;
-  clearInterval(timerInterval);
-  timerRemain = getTimerInput();
-  updateTimerDisplay();
-  const btn = document.getElementById('t-start');
-  btn.textContent = '開始';
-  btn.style.background = 'var(--blue)';
-  btn.style.borderColor = 'var(--blue)';
-});
-
-/* ═══════════════════════════════
-   TASKS
-═══════════════════════════════ */
-function loadTasks() {
-  try { return JSON.parse(localStorage.getItem('nt_tasks')) || []; }
-  catch { return []; }
-}
-function saveTasks(tasks) { localStorage.setItem('nt_tasks', JSON.stringify(tasks)); }
-
-let taskIdCounter = Date.now();
-
-function renderTasks() {
-  const tasks = loadTasks();
-  const list = document.getElementById('task-list');
-  list.innerHTML = '';
-  tasks.forEach((t, i) => {
-    const div = document.createElement('div');
-    div.className = 'task-item' + (t.done ? ' done' : '');
-    const id = `task-${i}`;
-    div.innerHTML = `
-      <input type="checkbox" id="${id}" ${t.done ? 'checked' : ''}>
-      <label for="${id}">${escapeHTML(t.text)}</label>
-      <button class="tdel" data-i="${i}">×</button>
-    `;
-    div.querySelector('input').addEventListener('change', function() {
-      const tasks = loadTasks();
-      tasks[i].done = this.checked;
-      saveTasks(tasks);
-      renderTasks();
-    });
-    div.querySelector('.tdel').addEventListener('click', () => {
-      const tasks = loadTasks();
-      tasks.splice(i, 1);
-      saveTasks(tasks);
-      renderTasks();
-    });
+/* TASKS */
+let taskIdCounter=Date.now();
+function escapeHTML(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderTasks(){
+  const tasks=AppData.tasks||[],list=document.getElementById('task-list');list.innerHTML='';
+  tasks.forEach((t,i)=>{
+    const div=document.createElement('div');div.className='task-item'+(t.done?' done':'');
+    div.innerHTML=`<input type="checkbox" id="task-${i}" ${t.done?'checked':''}><label for="task-${i}">${escapeHTML(t.text)}</label><button class="tdel">×</button>`;
+    div.querySelector('input').addEventListener('change',function(){AppData.tasks[i].done=this.checked;saveData();renderTasks();});
+    div.querySelector('.tdel').addEventListener('click',()=>{AppData.tasks.splice(i,1);saveData();renderTasks();});
     list.appendChild(div);
   });
 }
+document.getElementById('task-add-btn').addEventListener('click',addTask);
+document.getElementById('task-input').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
+function addTask(){const input=document.getElementById('task-input'),text=input.value.trim();if(!text)return;if(!AppData.tasks)AppData.tasks=[];AppData.tasks.push({text,done:false,id:taskIdCounter++});saveData();input.value='';renderTasks();}
+document.getElementById('tasks-clear').addEventListener('click',()=>{AppData.tasks=(AppData.tasks||[]).filter(t=>!t.done);saveData();renderTasks();});
 
-function escapeHTML(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+/* INIT */
+function startApp(){migrateLinks();initMemo();initWeather();renderCols();renderTasks();}
+async function init(){
+  const ready=await initStorage();
+  if(!ready){document.getElementById('setup-overlay').classList.add('open');return;}
+  startApp();
 }
-
-document.getElementById('task-add-btn').addEventListener('click', addTask);
-document.getElementById('task-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') addTask();
-});
-
-function addTask() {
-  const input = document.getElementById('task-input');
-  const text = input.value.trim();
-  if (!text) return;
-  const tasks = loadTasks();
-  tasks.push({ text, done: false, id: taskIdCounter++ });
-  saveTasks(tasks);
-  input.value = '';
-  renderTasks();
-}
-
-document.getElementById('tasks-clear').addEventListener('click', () => {
-  const tasks = loadTasks().filter(t => !t.done);
-  saveTasks(tasks);
-  renderTasks();
-});
-
-renderTasks();
+init();
 </script>
 </body>
 </html>
