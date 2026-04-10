@@ -887,10 +887,17 @@ function fetchWeather(lat, lon) {
   });
 }
 
-if (navigator.geolocation) {
+const cachedCoords = JSON.parse(localStorage.getItem('nt_coords') || 'null');
+if (cachedCoords) {
+  fetchWeather(cachedCoords.lat, cachedCoords.lon);
+} else if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
-    pos => fetchWeather(pos.coords.latitude, pos.coords.longitude),
-    () => fetchWeather(35.6895, 139.6917) // fallback: Tokyo
+    pos => {
+      const lat = pos.coords.latitude, lon = pos.coords.longitude;
+      localStorage.setItem('nt_coords', JSON.stringify({ lat, lon }));
+      fetchWeather(lat, lon);
+    },
+    () => fetchWeather(35.6895, 139.6917)
   );
 } else {
   fetchWeather(35.6895, 139.6917);
