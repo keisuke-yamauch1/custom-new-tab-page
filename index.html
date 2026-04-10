@@ -312,6 +312,12 @@
       justify-content: center;
       font-size: 12px;
     }
+    .link-item .favicon img {
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      display: block;
+    }
     .link-item .lname { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .link-item .ledit {
       opacity: 0;
@@ -969,8 +975,16 @@ function renderCols() {
       a.href = lk.url;
       a.target = '_blank';
       a.rel = 'noopener';
+      const domain = (() => { try { return new URL(lk.url).hostname; } catch { return ''; } })();
+      const faviconSrc = domain
+        ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32`
+        : '';
       a.innerHTML = `
-        <div class="favicon">${lk.emoji || '🌐'}</div>
+        <div class="favicon">
+          ${faviconSrc
+            ? `<img src="${faviconSrc}" alt="" onerror="this.style.display='none';this.parentNode.textContent='${(lk.emoji||'🌐').replace(/'/g,'')}';">`
+            : (lk.emoji || '🌐')}
+        </div>
         <span class="lname">${lk.label}</span>
       `;
       const editBtn = document.createElement('button');
