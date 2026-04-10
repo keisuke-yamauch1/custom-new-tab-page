@@ -124,13 +124,6 @@
     .modal-btns button { padding: 7px 18px; border-radius: 8px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
     .modal-btns .primary { background: var(--accent); color: white; border-color: var(--accent); font-weight: 500; }
     .modal-btns .danger { color: var(--red); }
-    #setup-overlay .modal { text-align: center; align-items: center; }
-    .setup-btns { display: flex; gap: 10px; width: 100%; }
-    .setup-btns button { flex: 1; padding: 10px; border-radius: 10px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text); transition: filter 0.15s; }
-    .setup-btns button.primary { background: var(--accent); color: white; border-color: var(--accent); }
-    .setup-btns button:hover { filter: brightness(0.95); }
-    #file-indicator { font-size: 11px; color: var(--muted); }
-    #file-indicator.saving { color: var(--green); }
   </style>
 </head>
 <body>
@@ -138,12 +131,8 @@
 <header>
   <div class="left">
     <span class="hdate" id="h-date"></span>
-    <span id="file-indicator"></span>
   </div>
   <div class="right">
-    <button id="btn-change-file" title="データファイルを変更">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    </button>
     <button id="btn-settings" title="設定">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
@@ -244,18 +233,6 @@
   </div>
 </div>
 
-<!-- 初回セットアップ -->
-<div class="overlay" id="setup-overlay">
-  <div class="modal">
-    <h3>📁 データファイルの設定</h3>
-    <p>リンク・タスク・メモを JSON ファイルで管理します。<br>初回のみファイルを選択または新規作成してください。</p>
-    <div class="setup-btns">
-      <button id="setup-new" class="primary">✨ 新規作成</button>
-      <button id="setup-open">📂 既存を開く</button>
-    </div>
-  </div>
-</div>
-
 <!-- リンク編集モーダル -->
 <div class="overlay" id="modal">
   <div class="modal">
@@ -338,64 +315,41 @@ function initWeather(){
   else{fetchWeather(35.6895,139.6917);}
 }
 
-/* FILE STORAGE */
+/* DATA STORAGE (Origin Private File System) */
 const DEFAULT_COLS=[
   {id:'col1',name:'GENERAL',color:'#34a85a',links:[{emoji:'📧',label:'Gmail',url:'https://mail.google.com'},{emoji:'📅',label:'Calendar',url:'https://calendar.google.com'},{emoji:'🗒',label:'Keep',url:'https://keep.google.com'}]},
   {id:'col2',name:'GORAKU',color:'#1a73e8',links:[{emoji:'📺',label:'YouTube',url:'https://www.youtube.com'},{emoji:'🐦',label:'X',url:'https://x.com'},{emoji:'🦋',label:'Bluesky',url:'https://bsky.app'},{emoji:'🎮',label:'rururu',url:'https://rururu.app/'}]},
   {id:'col3',name:'PROJECTS',color:'#f5900c',links:[{emoji:'🐙',label:'GitHub',url:'https://github.com'}]},
 ];
 let AppData={version:1,memo:'',cols:JSON.parse(JSON.stringify(DEFAULT_COLS)),tasks:[],coords:null};
-let fileHandle=null,saveTimer=null;
+let saveTimer=null;
 
-function showSaveIndicator(name){
-  const el=document.getElementById('file-indicator');
-  el.textContent='💾 保存中...';el.className='saving';
-  setTimeout(()=>{el.textContent=name?`📄 ${name}`:'';el.className='';},800);
+async function getFileHandle(){
+  const root=await navigator.storage.getDirectory();
+  return root.getFileHandle('data.json',{create:true});
 }
 function saveData(){
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{
-    if(!fileHandle)return;
     try{
-      const w=await fileHandle.createWritable();
-      await w.write(JSON.stringify(AppData,null,2));await w.close();
-      const f=await fileHandle.getFile();showSaveIndicator(f.name);
+      const fh=await getFileHandle();
+      const w=await fh.createWritable();
+      await w.write(JSON.stringify(AppData,null,2));
+      await w.close();
     }catch(e){console.warn('Save failed:',e);}
   },400);
 }
-async function loadFromFile(){
-  const file=await fileHandle.getFile(),text=(await file.text()).trim();
-  if(text){try{const s=JSON.parse(text);AppData={...AppData,...s};if(!AppData.cols||!AppData.cols.length)AppData.cols=JSON.parse(JSON.stringify(DEFAULT_COLS));}catch(e){}}
-  else{AppData.cols=JSON.parse(JSON.stringify(DEFAULT_COLS));saveData();}
-  document.getElementById('file-indicator').textContent=`📄 ${file.name}`;
-}
-
-/* IndexedDB */
-function idbOpen(){return new Promise((res,rej)=>{const r=indexedDB.open('newtab-db',1);r.onupgradeneeded=e=>e.target.result.createObjectStore('store');r.onsuccess=e=>res(e.target.result);r.onerror=rej;});}
-async function idbGet(key){const db=await idbOpen();return new Promise(res=>{const tx=db.transaction('store','readonly'),r=tx.objectStore('store').get(key);r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);});}
-async function idbSet(key,val){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction('store','readwrite');tx.objectStore('store').put(val,key);tx.oncomplete=res;tx.onerror=rej;});}
-
 async function initStorage(){
   try{
-    const stored=await idbGet('fileHandle');
-    if(stored){
-      let perm=await stored.queryPermission({mode:'readwrite'});
-      if(perm!=='granted')perm=await stored.requestPermission({mode:'readwrite'});
-      if(perm==='granted'){fileHandle=stored;await loadFromFile();return true;}
+    const fh=await getFileHandle();
+    const file=await fh.getFile(),text=(await file.text()).trim();
+    if(text){
+      const s=JSON.parse(text);
+      AppData={...AppData,...s};
+      if(!AppData.cols||!AppData.cols.length)AppData.cols=JSON.parse(JSON.stringify(DEFAULT_COLS));
     }
   }catch(e){}
-  return false;
 }
-async function setupFile(mode){
-  try{
-    if(mode==='new'){fileHandle=await window.showSaveFilePicker({suggestedName:'newtab-data.json',types:[{description:'JSON',accept:{'application/json':['.json']}}]});}
-    else{[fileHandle]=await window.showOpenFilePicker({types:[{description:'JSON',accept:{'application/json':['.json']}}]});}
-    await idbSet('fileHandle',fileHandle);await loadFromFile();return true;
-  }catch(e){return false;}
-}
-document.getElementById('setup-new').addEventListener('click',async()=>{if(await setupFile('new')){document.getElementById('setup-overlay').classList.remove('open');startApp();}});
-document.getElementById('setup-open').addEventListener('click',async()=>{if(await setupFile('open')){document.getElementById('setup-overlay').classList.remove('open');startApp();}});
-document.getElementById('btn-change-file').addEventListener('click',async()=>{if(await setupFile('open'))startApp();});
 
 /* MEMO */
 function initMemo(){
@@ -499,11 +453,9 @@ function addTask(){const input=document.getElementById('task-input'),text=input.
 document.getElementById('tasks-clear').addEventListener('click',()=>{AppData.tasks=(AppData.tasks||[]).filter(t=>!t.done);saveData();renderTasks();});
 
 /* INIT */
-function startApp(){migrateLinks();initMemo();initWeather();renderCols();renderTasks();}
 async function init(){
-  const ready=await initStorage();
-  if(!ready){document.getElementById('setup-overlay').classList.add('open');return;}
-  startApp();
+  await initStorage();
+  migrateLinks();initMemo();initWeather();renderCols();renderTasks();
 }
 init();
 </script>
