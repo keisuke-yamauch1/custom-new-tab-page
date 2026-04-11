@@ -19,7 +19,7 @@
     header .right { display: flex; align-items: center; gap: 8px; }
     header button { background: none; border: none; cursor: pointer; color: var(--muted); padding: 4px; border-radius: 6px; display: flex; align-items: center; }
     header button:hover { background: var(--bg); color: var(--text); }
-    .main { flex: 1; display: grid; grid-template-columns: 220px 1fr 200px; gap: 10px; padding: 10px; overflow: hidden; min-height: 0; }
+    .main { flex: 1; display: grid; grid-template-columns: 220px 1fr; gap: 10px; padding: 10px; overflow: hidden; min-height: 0; }
     .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); }
     .card-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; }
     .card-header .add-btn { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 16px; line-height: 1; padding: 0 2px; border-radius: 4px; }
@@ -46,11 +46,7 @@
     .cal-day.sat { color: #1a73e8; }
     .cal-day.holiday { color: #e53935; }
     .cal-day.other-month { opacity: 0.3; }
-    #holidays-card { padding: 10px; }
-    .holidays-title { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
-    .holiday-item { font-size: 11px; padding: 2px 0; display: flex; gap: 8px; }
-    .holiday-item .hdate2 { color: var(--muted); flex-shrink: 0; }
-    .col-center { display: grid; grid-template-rows: auto auto 1fr; gap: 10px; overflow: hidden; min-height: 0; }
+    .col-center { display: grid; grid-template-rows: auto 1fr; gap: 10px; overflow: hidden; min-height: 0; }
     #site-icons { display: flex; gap: 12px; padding: 10px; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); flex-wrap: wrap; }
     .site-icon-item { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; color: var(--text); }
     .site-icon-item:hover .site-icon-box { transform: scale(1.06); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
@@ -59,7 +55,7 @@
     .site-icon-label { font-size: 11px; color: var(--muted); max-width: 72px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #memo-card { display: flex; flex-direction: column; }
     #memo-card .card-header { flex-shrink: 0; }
-    #memo-textarea { flex: 1; padding: 10px 14px; border: none; outline: none; resize: none; font-size: 13px; line-height: 1.7; color: var(--text); background: transparent; font-family: inherit; min-height: 80px; max-height: 130px; }
+    #memo-textarea { flex: 1; padding: 10px 14px; border: none; outline: none; resize: none; font-size: 13px; line-height: 1.7; color: var(--text); background: transparent; font-family: inherit; min-height: 200px; max-height: 300px; }
     .links-area { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; overflow: hidden; min-height: 0; align-content: start; }
     .add-col-card { display: flex; align-items: center; justify-content: center; min-height: 60px; cursor: pointer; border: 2px dashed var(--border); background: transparent; box-shadow: none; color: var(--muted); font-size: 13px; border-radius: var(--radius); transition: border-color 0.15s, color 0.15s; }
     .add-col-card:hover { border-color: var(--accent); color: var(--accent); }
@@ -78,19 +74,6 @@
     .link-item .ledit:hover { background: var(--border); }
     .add-link-btn { display: flex; align-items: center; gap: 6px; padding: 5px 8px; font-size: 12px; color: var(--muted); cursor: pointer; border-radius: 8px; margin: 2px 4px; }
     .add-link-btn:hover { background: var(--bg); color: var(--text); }
-    .col-right { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; overflow-x: hidden; }
-    .col-right::-webkit-scrollbar { width: 4px; }
-    .col-right::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-    #sw-display, #timer-display { font-size: 32px; font-weight: 200; text-align: center; padding: 10px 0 6px; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
-    .sw-btns, .timer-btns { display: flex; gap: 6px; padding: 0 10px 10px; justify-content: center; }
-    .sw-btns button, .timer-btns button { flex: 1; padding: 5px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; cursor: pointer; background: var(--bg); color: var(--text); transition: background 0.15s; }
-    .sw-btns button:hover, .timer-btns button:hover { background: var(--border); }
-    .sw-btns button.primary, .timer-btns button.primary { background: var(--green); color: white; border-color: var(--green); }
-    .sw-laps { font-size: 11px; color: var(--muted); max-height: 60px; overflow-y: auto; padding: 0 10px 8px; }
-    .sw-laps div { padding: 1px 0; }
-    #timer-input-row { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 8px 10px 0; }
-    #timer-input-row input { width: 44px; text-align: center; border: 1px solid var(--border); border-radius: 6px; padding: 4px; font-size: 13px; color: var(--text); background: var(--bg); }
-    #timer-input-row span { font-size: 12px; color: var(--muted); }
     #tasks-card { flex: 1; display: flex; flex-direction: column; min-height: 200px; }
     #tasks-card .card-header { color: var(--purple); flex-shrink: 0; }
     .task-list { flex: 1; overflow-y: auto; padding: 6px 8px; }
@@ -143,9 +126,23 @@
       </div>
       <div class="cal-grid" id="cal-grid"></div>
     </div>
-    <div class="card" id="holidays-card">
-      <div class="holidays-title">今後の祝日</div>
-      <div id="holidays-list"></div>
+    <div class="card" id="memo-card">
+      <div class="card-header">
+        <span>メモ</span>
+        <span style="font-size:10px;color:var(--muted);font-weight:400">自動保存</span>
+      </div>
+      <textarea id="memo-textarea" placeholder="ここに自由にメモを書けます..."></textarea>
+    </div>
+    <div class="card" id="tasks-card">
+      <div class="card-header" style="color:var(--purple)">
+        <span>✓ タスク</span>
+        <button class="add-btn" id="tasks-clear" title="完了済みを削除" style="font-size:12px">🗑</button>
+      </div>
+      <div class="task-list" id="task-list"></div>
+      <div class="task-add-row">
+        <input type="text" id="task-input" placeholder="タスクを追加...">
+        <button id="task-add-btn">追加</button>
+      </div>
     </div>
   </div>
 
@@ -164,51 +161,7 @@
         <span class="site-icon-label">いつまじラジオ</span>
       </a>
     </div>
-    <div class="card" id="memo-card">
-      <div class="card-header">
-        <span>メモ</span>
-        <span style="font-size:10px;color:var(--muted);font-weight:400">自動保存</span>
-      </div>
-      <textarea id="memo-textarea" placeholder="ここに自由にメモを書けます..."></textarea>
-    </div>
     <div class="links-area" id="links-area"></div>
-  </div>
-
-  <div class="col-right">
-    <div class="card" id="sw-card">
-      <div class="card-header" style="color:var(--green)">⏱ ストップウォッチ</div>
-      <div id="sw-display">00:00.00</div>
-      <div class="sw-btns">
-        <button id="sw-start" class="primary">開始</button>
-        <button id="sw-lap">ラップ</button>
-        <button id="sw-reset">リセット</button>
-      </div>
-      <div class="sw-laps" id="sw-laps"></div>
-    </div>
-    <div class="card" id="timer-card">
-      <div class="card-header" style="color:var(--blue)">⏲ タイマー</div>
-      <div id="timer-input-row">
-        <input type="number" id="t-h" min="0" max="99" value="0"><span>時</span>
-        <input type="number" id="t-m" min="0" max="59" value="5"><span>分</span>
-        <input type="number" id="t-s" min="0" max="59" value="0"><span>秒</span>
-      </div>
-      <div id="timer-display">00:05:00</div>
-      <div class="timer-btns">
-        <button id="t-start" class="primary">開始</button>
-        <button id="t-reset">リセット</button>
-      </div>
-    </div>
-    <div class="card" id="tasks-card">
-      <div class="card-header" style="color:var(--purple)">
-        <span>✓ タスク</span>
-        <button class="add-btn" id="tasks-clear" title="完了済みを削除" style="font-size:12px">🗑</button>
-      </div>
-      <div class="task-list" id="task-list"></div>
-      <div class="task-add-row">
-        <input type="text" id="task-input" placeholder="タスクを追加...">
-        <button id="task-add-btn">追加</button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -241,16 +194,6 @@ updateClock(); setInterval(updateClock,1000);
 /* HOLIDAYS */
 const HOLIDAYS={'2025-01-01':'元日','2025-01-13':'成人の日','2025-02-11':'建国記念の日','2025-02-23':'天皇誕生日','2025-03-20':'春分の日','2025-04-29':'昭和の日','2025-05-03':'憲法記念日','2025-05-04':'みどりの日','2025-05-05':'こどもの日','2025-05-06':'振替休日','2025-07-21':'海の日','2025-08-11':'山の日','2025-09-15':'敬老の日','2025-09-23':'秋分の日','2025-10-13':'スポーツの日','2025-11-03':'文化の日','2025-11-23':'勤労感謝の日','2026-01-01':'元日','2026-01-12':'成人の日','2026-02-11':'建国記念の日','2026-02-23':'天皇誕生日','2026-03-20':'春分の日','2026-04-29':'昭和の日','2026-05-03':'憲法記念日','2026-05-04':'みどりの日','2026-05-05':'こどもの日','2026-07-20':'海の日','2026-08-11':'山の日','2026-09-21':'敬老の日','2026-09-23':'秋分の日','2026-10-12':'スポーツの日','2026-11-03':'文化の日','2026-11-23':'勤労感謝の日'};
 function dateKey(y,m,d){return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
-function renderHolidays(){
-  const today=new Date(),el=document.getElementById('holidays-list');
-  el.innerHTML='';
-  Object.entries(HOLIDAYS).filter(([k])=>k>=dateKey(today.getFullYear(),today.getMonth()+1,today.getDate())).slice(0,6).forEach(([k,name])=>{
-    const[,m,d]=k.split('-'),div=document.createElement('div');
-    div.className='holiday-item';div.innerHTML=`<span class="hdate2">${m}-${d}</span><span class="hname">${name}</span>`;
-    el.appendChild(div);
-  });
-}
-renderHolidays();
 
 /* CALENDAR */
 let calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
@@ -366,31 +309,6 @@ document.getElementById('m-save').addEventListener('click',()=>{
 document.getElementById('m-delete').addEventListener('click',()=>{AppData.cols[modalColIdx].links.splice(modalLinkIdx,1);saveData();renderCols();document.getElementById('modal').classList.remove('open');});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('modal').classList.remove('open');});
 
-/* STOPWATCH */
-let swRunning=false,swStart=0,swElapsed=0,swRAF=null,swLaps=[];
-function formatSW(ms){return `${String(Math.floor(ms/60000)).padStart(2,'0')}:${String(Math.floor((ms%60000)/1000)).padStart(2,'0')}.${String(Math.floor((ms%1000)/10)).padStart(2,'0')}`;}
-function swTick(){document.getElementById('sw-display').textContent=formatSW(swElapsed+(Date.now()-swStart));swRAF=requestAnimationFrame(swTick);}
-document.getElementById('sw-start').addEventListener('click',function(){
-  if(!swRunning){swRunning=true;swStart=Date.now();swRAF=requestAnimationFrame(swTick);this.textContent='停止';this.style.background='var(--red)';this.style.borderColor='var(--red)';}
-  else{swRunning=false;swElapsed+=Date.now()-swStart;cancelAnimationFrame(swRAF);this.textContent='再開';this.style.background='var(--green)';this.style.borderColor='var(--green)';}
-});
-document.getElementById('sw-lap').addEventListener('click',()=>{if(!swRunning)return;swLaps.push(swElapsed+(Date.now()-swStart));document.getElementById('sw-laps').innerHTML=swLaps.map((l,i)=>`<div>Lap ${i+1}: ${formatSW(l)}</div>`).reverse().join('');});
-document.getElementById('sw-reset').addEventListener('click',()=>{swRunning=false;cancelAnimationFrame(swRAF);swElapsed=0;swLaps=[];document.getElementById('sw-display').textContent='00:00.00';document.getElementById('sw-laps').innerHTML='';const b=document.getElementById('sw-start');b.textContent='開始';b.style.background='var(--green)';b.style.borderColor='var(--green)';});
-
-/* TIMER */
-let timerRunning=false,timerRemain=300,timerInterval=null;
-function getTimerInput(){return(parseInt(document.getElementById('t-h').value)||0)*3600+(parseInt(document.getElementById('t-m').value)||0)*60+(parseInt(document.getElementById('t-s').value)||0);}
-function formatTimer(s){return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
-function updateTimerDisplay(){document.getElementById('timer-display').textContent=formatTimer(timerRemain);}
-['t-h','t-m','t-s'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{timerRemain=getTimerInput();updateTimerDisplay();}));
-timerRemain=getTimerInput();updateTimerDisplay();
-document.getElementById('t-start').addEventListener('click',function(){
-  if(!timerRunning){
-    if(timerRemain<=0)timerRemain=getTimerInput();timerRunning=true;this.textContent='停止';this.style.background='var(--red)';this.style.borderColor='var(--red)';
-    timerInterval=setInterval(()=>{timerRemain--;updateTimerDisplay();if(timerRemain<=0){clearInterval(timerInterval);timerRunning=false;const b=document.getElementById('t-start');b.textContent='開始';b.style.background='var(--blue)';b.style.borderColor='var(--blue)';try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[0,.3,.6].forEach(d=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.setValueAtTime(.3,ctx.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d+.5);o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.5);});}catch(e){}}},1000);
-  }else{timerRunning=false;clearInterval(timerInterval);this.textContent='再開';this.style.background='var(--blue)';this.style.borderColor='var(--blue)';}
-});
-document.getElementById('t-reset').addEventListener('click',()=>{timerRunning=false;clearInterval(timerInterval);timerRemain=getTimerInput();updateTimerDisplay();const b=document.getElementById('t-start');b.textContent='開始';b.style.background='var(--blue)';b.style.borderColor='var(--blue)';});
 
 /* TASKS */
 let taskIdCounter=Date.now();
