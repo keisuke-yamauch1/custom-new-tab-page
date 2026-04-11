@@ -218,28 +218,20 @@ renderCalendar();
 
 
 /* DATA STORAGE (Origin Private File System) */
-let AppData={version:1,memo:'',cols:[],tasks:[]};
+let AppData={version:1,memo:'',cols:[],tasks:[],showSiteIcons:false};
 let saveTimer=null;
+const STORAGE_KEY='dashboard_data';
 
-async function getFileHandle(){
-  const root=await navigator.storage.getDirectory();
-  return root.getFileHandle('data.json',{create:true});
-}
 function saveData(){
   clearTimeout(saveTimer);
-  saveTimer=setTimeout(async()=>{
-    try{
-      const fh=await getFileHandle();
-      const w=await fh.createWritable();
-      await w.write(JSON.stringify(AppData,null,2));
-      await w.close();
-    }catch(e){console.warn('Save failed:',e);}
+  saveTimer=setTimeout(()=>{
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(AppData));}
+    catch(e){console.warn('Save failed:',e);}
   },400);
 }
-async function initStorage(){
+function initStorage(){
   try{
-    const fh=await getFileHandle();
-    const file=await fh.getFile(),text=(await file.text()).trim();
+    const text=localStorage.getItem(STORAGE_KEY);
     if(text){
       const s=JSON.parse(text);
       AppData={...AppData,...s};
@@ -329,11 +321,9 @@ function addTask(){const input=document.getElementById('task-input'),text=input.
 document.getElementById('tasks-clear').addEventListener('click',()=>{AppData.tasks=(AppData.tasks||[]).filter(t=>!t.done);saveData();renderTasks();});
 
 /* INIT */
-async function init(){
-  await initStorage();
-  initMemo();renderCols();renderTasks();
-}
-init();
+initStorage();
+document.getElementById('site-icons').style.display=AppData.showSiteIcons?'flex':'none';
+initMemo();renderCols();renderTasks();
 </script>
 </body>
 </html>
