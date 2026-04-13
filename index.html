@@ -46,8 +46,8 @@
     .cal-day.sat { color: #1a73e8; }
     .cal-day.holiday { color: #e53935; }
     .cal-day.other-month { opacity: 0.3; }
-    .col-center { display: grid; grid-template-rows: auto 1fr; gap: 10px; overflow: hidden; min-height: 0; }
-    #site-icons { display: flex; gap: 12px; padding: 10px; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); flex-wrap: wrap; }
+    .col-center { display: grid; grid-template-rows: auto auto 1fr; gap: 10px; overflow: hidden; min-height: 0; }
+    #site-icons, #site-icons-apps { display: flex; gap: 12px; padding: 10px; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); flex-wrap: wrap; }
     .site-icon-item { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; color: var(--text); }
     .site-icon-item:hover .site-icon-box { transform: scale(1.06); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
     .site-icon-box { width: 64px; height: 64px; border-radius: 16px; border: 1.5px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s; }
@@ -159,6 +159,20 @@
       <a class="site-icon-item" href="https://listen.style/p/itsumaji-radio" target="_blank" rel="noopener">
         <div class="site-icon-box"><img src="https://images.kechiiiiin.com/icon/%E3%81%84%E3%81%A4%E3%81%BE%E3%81%97%E3%82%99%E3%83%A9%E3%82%B7%E3%82%99%E3%82%AA.jpg" alt=""></div>
         <span class="site-icon-label">いつまじラジオ</span>
+      </a>
+    </div>
+    <div id="site-icons-apps">
+      <a class="site-icon-item" href="obsidian://open">
+        <div class="site-icon-box"><img src="https://www.google.com/s2/favicons?domain=obsidian.md&sz=64" alt=""></div>
+        <span class="site-icon-label">Obsidian</span>
+      </a>
+      <a class="site-icon-item" href="slack://open">
+        <div class="site-icon-box"><img src="https://www.google.com/s2/favicons?domain=slack.com&sz=64" alt=""></div>
+        <span class="site-icon-label">Slack</span>
+      </a>
+      <a class="site-icon-item" href="discord://">
+        <div class="site-icon-box"><img src="https://www.google.com/s2/favicons?domain=discord.com&sz=64" alt=""></div>
+        <span class="site-icon-label">Discord</span>
       </a>
     </div>
     <div class="links-area" id="links-area"></div>
