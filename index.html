@@ -12,6 +12,9 @@
   <div class="left">
     <span class="hdate">ダッシュボード</span>
   </div>
+  <div class="right">
+    <button id="snapshot-config-btn" title="スナップショット保存先を設定">📁</button>
+  </div>
 </header>
 
 <div class="main">
@@ -141,10 +144,74 @@ const STORAGE_KEY='dashboard_data';
 function saveData(){
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{
-    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(AppData));}
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(AppData));saveSnapshot();}
     catch(e){console.warn('Save failed:',e);}
   },400);
 }
+
+/* SNAPSHOT (File System Access API) */
+const SNAPSHOT_DB='snapshot-config',SNAPSHOT_STORE='handles',SNAPSHOT_KEY='storage-history';
+function openSnapshotDB(){
+  return new Promise((resolve,reject)=>{
+    const req=indexedDB.open(SNAPSHOT_DB,1);
+    req.onupgradeneeded=()=>req.result.createObjectStore(SNAPSHOT_STORE);
+    req.onsuccess=()=>resolve(req.result);
+    req.onerror=()=>reject(req.error);
+  });
+}
+async function loadDirHandle(){
+  try{
+    const db=await openSnapshotDB();
+    return await new Promise(resolve=>{
+      const tx=db.transaction(SNAPSHOT_STORE,'readonly');
+      const req=tx.objectStore(SNAPSHOT_STORE).get(SNAPSHOT_KEY);
+      req.onsuccess=()=>resolve(req.result||null);
+      req.onerror=()=>resolve(null);
+    });
+  }catch{return null;}
+}
+async function saveDirHandle(handle){
+  const db=await openSnapshotDB();
+  return new Promise(resolve=>{
+    const tx=db.transaction(SNAPSHOT_STORE,'readwrite');
+    tx.objectStore(SNAPSHOT_STORE).put(handle,SNAPSHOT_KEY);
+    tx.oncomplete=()=>resolve();
+  });
+}
+async function pickSnapshotDir(){
+  if(!window.showDirectoryPicker){alert('このブラウザは File System Access API に対応していません');return null;}
+  try{
+    const handle=await window.showDirectoryPicker({id:'storage-history',mode:'readwrite'});
+    await saveDirHandle(handle);
+    return handle;
+  }catch(e){if(e.name!=='AbortError')console.warn('pick dir failed:',e);return null;}
+}
+async function getDirHandleForWrite(){
+  const handle=await loadDirHandle();
+  if(!handle)return null;
+  const opts={mode:'readwrite'};
+  let perm=await handle.queryPermission(opts);
+  if(perm==='granted')return handle;
+  return null;
+}
+function snapshotFilename(){
+  const n=new Date(),pad=v=>String(v).padStart(2,'0');
+  return `${n.getFullYear()}${pad(n.getMonth()+1)}${pad(n.getDate())}${pad(n.getHours())}${pad(n.getMinutes())}${pad(n.getSeconds())}.json`;
+}
+async function saveSnapshot(){
+  try{
+    const dir=await getDirHandleForWrite();
+    if(!dir)return;
+    const file=await dir.getFileHandle(snapshotFilename(),{create:true});
+    const writer=await file.createWritable();
+    await writer.write(JSON.stringify(AppData,null,2));
+    await writer.close();
+  }catch(e){console.warn('Snapshot failed:',e);}
+}
+document.getElementById('snapshot-config-btn').addEventListener('click',async()=>{
+  const handle=await pickSnapshotDir();
+  if(handle){await saveSnapshot();alert('保存先を設定しました。以後の変更が自動でスナップショット保存されます。');}
+});
 function initStorage(){
   try{
     const text=localStorage.getItem(STORAGE_KEY);
