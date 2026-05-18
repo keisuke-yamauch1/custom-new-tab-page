@@ -95,3 +95,6 @@ header button:hover { background: var(--bg); color: var(--text); }
 .modal-btns button { padding: 7px 18px; border-radius: 8px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
 .modal-btns .primary { background: var(--accent); color: white; border-color: var(--accent); font-weight: 500; }
 .modal-btns .danger { color: var(--red); }
+#apps-menu-btn { background: none; border: none; cursor: pointer; color: var(--muted); padding: 4px; border-radius: 6px; display: flex; align-items: center; text-decoration: none; }
+#apps-menu-btn:hover { background: var(--bg); color: var(--text); }
+#apps-menu-btn svg { display: block; }
